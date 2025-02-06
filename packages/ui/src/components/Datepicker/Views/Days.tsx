@@ -37,7 +37,6 @@ export const DatepickerViewsDays: FC<DatepickerViewsDaysProps> = ({ theme: custo
   } = useDatePickerContext();
 
   const theme = mergeDeep(rootTheme.views.days, customTheme);
-
   const weekDays = getWeekDays(language, weekStart);
   const startDate = getFirstDayOfTheMonth(viewDate, weekStart);
 
@@ -51,33 +50,46 @@ export const DatepickerViewsDays: FC<DatepickerViewsDaysProps> = ({ theme: custo
         ))}
       </div>
       <div className={theme.items.base}>
-        {[...Array(42)].map((_date, index) => {
-          const currentDate = addDays(startDate, index);
-          const day = getFormattedDate(language, currentDate, { day: "numeric" });
+        {
+          [...Array(42)].reduce<{ count: number; buttons: Array<JSX.Element> }>(
+            (p, _date, index) => {
+              const currentDate = addDays(startDate, index);
+              const day = getFormattedDate(language, currentDate, { day: "numeric" });
+              if (Number(day) === 1) p.count--;
 
-          const isSelected = selectedDate && isDateEqual(selectedDate, currentDate);
-          const isDisabled = !isDateInRange(currentDate, minDate, maxDate);
+              const isSelected = selectedDate && isDateEqual(selectedDate, currentDate);
+              const isDisabled = !isDateInRange(currentDate, minDate, maxDate);
+              const isRest = p.count === 1 ? "" : "text-[#CCD3D9]";
 
-          return (
-            <button
-              disabled={isDisabled}
-              key={index}
-              type="button"
-              className={twMerge(
-                theme.items.item.base,
-                isSelected && theme.items.item.selected,
-                isDisabled && theme.items.item.disabled,
-              )}
-              onClick={() => {
-                if (isDisabled) return;
+              p.buttons.push(
+                <button
+                  disabled={isDisabled}
+                  key={index}
+                  type="button"
+                  className={twMerge(
+                    theme.items.item.base,
+                    isSelected && theme.items.item.selected,
+                    isDisabled && theme.items.item.disabled,
+                    isRest,
+                  )}
+                  onClick={() => {
+                    if (isDisabled) return;
 
-                changeSelectedDate(currentDate, true);
-              }}
-            >
-              {day}
-            </button>
-          );
-        })}
+                    changeSelectedDate(currentDate, true);
+                  }}
+                >
+                  {day}
+                </button>,
+              );
+
+              return p;
+            },
+            {
+              count: 2,
+              buttons: [],
+            },
+          ).buttons
+        }
       </div>
     </>
   );

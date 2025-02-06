@@ -114,7 +114,8 @@ export const getFormattedDate = (language: string, date: Date, options?: Intl.Da
     defaultOptions = options;
   }
 
-  return new Intl.DateTimeFormat(language, defaultOptions).format(date);
+  const formattedDate = new Intl.DateTimeFormat(language, defaultOptions).format(date);
+  return formattedDate.length <= 3 ? formattedDate.replace("일", "").trim() : formattedDate;
 };
 
 export const startOfYearPeriod = (date: Date, years: number): number => {
