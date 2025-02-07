@@ -11,3 +11,10 @@ tsconfig.tsbuildinfo
 
 # turbo
 .turbo
+
+packages
+!packages/*
+packages/ui
+!packages/ui/*
+packages/ui/.gitignore
+dist
