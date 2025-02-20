@@ -29,7 +29,7 @@ const DatepickerViewsDays = ({ theme: customTheme = {} }) => {
         if (Number(day) === 1) p.count--;
         const isSelected = selectedDate && helpers.isDateEqual(selectedDate, currentDate);
         const isDisabled = !helpers.isDateInRange(currentDate, minDate, maxDate);
-        const isRest = p.count === 1 ? "" : "text-[#CCD3D9]";
+        const isRest = p.count === 1 ? "" : "dark:text-datepicker-dark text-datepicker";
         p.buttons.push(
           /* @__PURE__ */ jsxRuntime.jsx(
             "button",
