@@ -22,6 +22,7 @@ export declare const getWeekDays: (lang: string, weekStart: WeekStart) => string
 export declare const addDays: (date: Date, amount: number) => Date;
 export declare const addMonths: (date: Date, amount: number) => Date;
 export declare const addYears: (date: Date, amount: number) => Date;
+export declare const convertKoreanDateToISO: (dateStr: string) => string;
 export declare const getFormattedDate: (language: string, date: Date, options?: Intl.DateTimeFormatOptions) => string;
 export declare const startOfYearPeriod: (date: Date, years: number) => number;
 export declare const isDateInDecade: (date: Date, startYear: number) => boolean;

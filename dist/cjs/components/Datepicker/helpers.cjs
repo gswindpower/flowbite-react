@@ -83,16 +83,22 @@ const addYears = (date, amount) => {
   newDate.setFullYear(newDate.getFullYear() + amount);
   return newDate;
 };
+const convertKoreanDateToISO = (dateStr) => {
+  const match = dateStr.match(/(\d{4}).\s*(\d{2}).\s*(\d{2})./);
+  if (!match) return dateStr;
+  const [, year, month, day] = match;
+  return `${year}-${month}-${day}`;
+};
 const getFormattedDate = (language, date, options) => {
   let defaultOptions = {
-    day: "numeric",
-    month: "long",
+    day: "2-digit",
+    month: "2-digit",
     year: "numeric"
   };
   if (options) {
     defaultOptions = options;
   }
-  const formattedDate = new Intl.DateTimeFormat(language, defaultOptions).format(date);
+  const formattedDate = convertKoreanDateToISO(new Intl.DateTimeFormat(language, defaultOptions).format(date));
   return formattedDate.length <= 3 ? formattedDate.replace("\uC77C", "").trim() : formattedDate;
 };
 const startOfYearPeriod = (date, years) => {
@@ -110,6 +116,7 @@ exports.WeekStart = WeekStart;
 exports.addDays = addDays;
 exports.addMonths = addMonths;
 exports.addYears = addYears;
+exports.convertKoreanDateToISO = convertKoreanDateToISO;
 exports.getFirstDateInRange = getFirstDateInRange;
 exports.getFirstDayOfTheMonth = getFirstDayOfTheMonth;
 exports.getFormattedDate = getFormattedDate;
