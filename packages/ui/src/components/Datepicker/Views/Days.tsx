@@ -59,7 +59,7 @@ export const DatepickerViewsDays: FC<DatepickerViewsDaysProps> = ({ theme: custo
 
               const isSelected = selectedDate && isDateEqual(selectedDate, currentDate);
               const isDisabled = !isDateInRange(currentDate, minDate, maxDate);
-              const isRest = p.count === 1 ? "" : "text-[#CCD3D9]";
+              const isRest = p.count === 1 ? "" : "dark:text-datepicker-dark text-datepicker";
 
               p.buttons.push(
                 <button
