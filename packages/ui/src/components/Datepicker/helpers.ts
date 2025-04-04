@@ -103,10 +103,19 @@ export const addYears = (date: Date, amount: number): Date => {
   return newDate;
 };
 
+export const convertKoreanDateToISO = (dateStr: string): string => {
+  const match = dateStr.match(/(\d{4}).\s*(\d{2}).\s*(\d{2})./);
+
+  if (!match) return dateStr;
+
+  const [, year, month, day] = match;
+  return `${year}-${month}-${day}`;
+};
+
 export const getFormattedDate = (language: string, date: Date, options?: Intl.DateTimeFormatOptions): string => {
   let defaultOptions: Intl.DateTimeFormatOptions = {
-    day: "numeric",
-    month: "long",
+    day: "2-digit",
+    month: "2-digit",
     year: "numeric",
   };
 
@@ -114,7 +123,7 @@ export const getFormattedDate = (language: string, date: Date, options?: Intl.Da
     defaultOptions = options;
   }
 
-  const formattedDate = new Intl.DateTimeFormat(language, defaultOptions).format(date);
+  const formattedDate = convertKoreanDateToISO(new Intl.DateTimeFormat(language, defaultOptions).format(date));
   return formattedDate.length <= 3 ? formattedDate.replace("일", "").trim() : formattedDate;
 };
 
